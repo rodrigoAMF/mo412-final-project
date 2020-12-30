@@ -22,10 +22,18 @@ Grading criteria:
 **No need to write a report - email us the presentation as a pdf file** (need to confirm with professor)
 
 ## Environment setup
-Install [anaconda](https://www.anaconda.com/products/individual) or [miniconda](https://docs.conda.io/en/latest/miniconda.html) clone this project, open the project folder in a terminal and run:
+Install [anaconda](https://www.anaconda.com/products/individual) or [miniconda](https://docs.conda.io/en/latest/miniconda.html) clone this project, open repository main folder in a terminal and run:
 
 ```
 conda create -n MO412 python=3.8.5
 conda activate MO412
 pip install -r requirements.txt
+```
+
+## Project package setup
+Open repository main folder in a terminal and run:
+
+```
+cd project
+pip install -e .
 ```
