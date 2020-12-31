@@ -18,9 +18,13 @@ def get_musics(path_to_musics_folder="music/", verbose=True):
     return path_to_musics_available
 
 
-def add_nodes_edges_from_melody(G, melody):
+def generate_graph_from_melody(melody):
+    G = nx.DiGraph()
+
+    nodes_list = list(set(melody))
+    G.add_nodes_from(nodes_list)
+
     for i in range(1, len(melody)):
-        G.add_node(melody[i])
         if G.has_edge(melody[i], melody[i-1]):
             G[melody[i]][melody[i-1]]['weight'] += 1
         else:
@@ -30,9 +34,7 @@ def add_nodes_edges_from_melody(G, melody):
 
 
 def get_graph_and_melody_from_music(path_to_music):
-    G = nx.DiGraph()
     melody = []
-    
     b = converter.parse(path_to_music)
 
     for note in b.parts[0].semiFlat.notesAndRests:
@@ -42,15 +44,13 @@ def get_graph_and_melody_from_music(path_to_music):
             melody.append(note.notes[-1].nameWithOctave + ' ' + note.notes[-1].duration.type)
         else:
             melody.append(note.nameWithOctave + ' ' + note.duration.type)
-        G.add_node(melody[0])
-    
-    G = add_nodes_edges_from_melody(G, melody)
-                
+
+    G = generate_graph_from_melody(melody)
+
     return G, melody
 
 
 def get_graph_and_melody_from_musics(path_to_folder):
-    G_musics = nx.DiGraph()
     melody_musics = []
 
     for file in os.listdir(path_to_folder):
@@ -59,6 +59,6 @@ def get_graph_and_melody_from_musics(path_to_folder):
             _, melody = get_graph_and_melody_from_music(file)
             melody_musics.extend(melody)
 
-            G_musics = add_nodes_edges_from_melody(G_musics, melody_musics)
+    G_musics = generate_graph_from_melody(melody_musics)
             
     return G_musics, melody_musics
