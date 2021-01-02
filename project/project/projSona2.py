@@ -68,7 +68,7 @@ def analise(G,name):
         degsIn[i] = degsIn[i]/n;
         degsOut[i] = degsOut[i]/n;
         degs[i] = degs[i]/n;
-        
+
     plt.loglog(range(n),degsOut[0:n], 'ro');
     fit = powerlaw.Fit(degsOut);
     
