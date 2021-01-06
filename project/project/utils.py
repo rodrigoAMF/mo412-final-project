@@ -86,12 +86,23 @@ def get_network_info(network, melody):
     degrees_in = np.array([network.in_degree(n) for n in network.nodes()])
     degrees_out = np.array([network.out_degree(n) for n in network.nodes()])
 
+    frequency_array = get_frequency_array(degrees_in)
+    frequency_array_in = np.zeros(frequency_array[-1][0] + 1)
+    for index, value in frequency_array:
+        frequency_array_in[index] = value / network.number_of_nodes()
+
+    frequency_array = get_frequency_array(degrees_out)
+    frequency_array_out = np.zeros(frequency_array[-1][0] + 1)
+    for index, value in frequency_array:
+        frequency_array_out[index] = value / network.number_of_nodes()
+
     connected_components = sorted(nx.connected_components(network.to_undirected()), key=len, reverse=True)
     average_distance = nx.average_shortest_path_length(network)
 
     cc  = nx.clustering(network)
-    fit_in = powerlaw.Fit(degrees_in)
-    fit_out = powerlaw.Fit(degrees_out)
+
+    fit_in = powerlaw.Fit(frequency_array_in)
+    fit_out = powerlaw.Fit(frequency_array_out)
 
     alpha_in = fit_in.alpha
     alpha_out = fit_out.alpha
