@@ -107,7 +107,7 @@ def get_network_info(network, melody):
     network_info_str += "9. Power-law exponent in-degree: {:.4f}\n".format(alpha_in)
     network_info_str += "9. Power-law exponent out-degree: {:.4f}\n".format(alpha_out)
     network_info_str += "Number of connected components: {:}\n".format(len(connected_components))
-    network_info_str += "Assortativity coefficient: {:.4f}\n".format(nx.degree_assortativity_coefficient(network))
+    network_info_str += "Assortativity coefficient: {:.4f}".format(nx.degree_assortativity_coefficient(network))
 
     return network_info_str
 
