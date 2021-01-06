@@ -1,12 +1,12 @@
 import os
 
-import powerlaw
-import numpy as np
-import networkx as nx
 import matplotlib.pyplot as plt
-
 from music21 import *
-from scipy import optimize
+import networkx as nx
+import numpy as np
+import powerlaw
+import warnings
+warnings.filterwarnings("ignore")
 
 
 def get_musics(path_to_musics_folder="music/", verbose=True):
@@ -71,24 +71,45 @@ def get_graph_and_melody_from_musics(path_to_folder):
     return G_musics, melody_musics
 
 
-def show_network_info(network):
+def get_network_info(network, melody):
     network_info = nx.info(network)
-    network_info = '\n'.join(network_info.split("\n")[2:])
+    #network_info = '\n'.join(network_info.split("\n")[2:])
+    network_info = network_info.split("\n")[2:]
 
-    degrees = np.array([network.degree(n) for n in network.nodes()])
+    length_composition = len(melody)
+    network_info_str = "1. Length of composition: {:}\n".format(length_composition)
+    for i, info in enumerate(network_info):
+        if i == 3:
+            i = 2
+        network_info_str += "{}. {}\n".format(i+2, info)
+
+    degrees_in = np.array([network.in_degree(n) for n in network.nodes()])
+    degrees_out = np.array([network.out_degree(n) for n in network.nodes()])
 
     connected_components = sorted(nx.connected_components(network.to_undirected()), key=len, reverse=True)
     average_distance = nx.average_shortest_path_length(network)
 
     cc  = nx.clustering(network)
+    fit_in = powerlaw.Fit(degrees_in)
+    fit_out = powerlaw.Fit(degrees_out)
+
+    alpha_in = fit_in.alpha
+    alpha_out = fit_out.alpha
+
     average_cc = nx.average_clustering(network)
+    diameter = nx.algorithms.distance_measures.diameter(network)
+    centrality = sorted([value for key, value in nx.algorithms.centrality.degree_centrality(network).items()])[-1]
 
-    print(network_info)
-    print("Number of connected components: {}".format(len(connected_components)))
-    print("Average distance: {:.6f}".format(average_distance))
-    print("Average cluster coefficient <C>: {:.4f}".format(average_cc))
-    print("Assortativity coefficient: " + str(nx.degree_assortativity_coefficient(network)))
+    network_info_str += "5. Average distance: {:.4f}\n".format(average_distance)
+    network_info_str += "6. Network diameter: {:.4f}\n".format(diameter)
+    network_info_str += "7. Average cluster coefficient <C>: {:.4f}\n".format(average_cc)
+    network_info_str += "8. Centrality coefficient: {:.4f}\n".format(centrality)
+    network_info_str += "9. Power-law exponent in-degree: {:.4f}\n".format(alpha_in)
+    network_info_str += "9. Power-law exponent out-degree: {:.4f}\n".format(alpha_out)
+    network_info_str += "Number of connected components: {:}\n".format(len(connected_components))
+    network_info_str += "Assortativity coefficient: {:.4f}\n".format(nx.degree_assortativity_coefficient(network))
 
+    return network_info_str
 
 def get_degree_distribution_linear_binning(frequency_array):
     N = frequency_array.shape[0]
