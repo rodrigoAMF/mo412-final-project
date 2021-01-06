@@ -1,0 +1,7 @@
+Network,Length of composition,Number of nodes,Number of edges,Average in degree,Average out degree,Average distance,Network diameter,Average cluster coefficient <C>,Centrality coefficient,Power-law exponent in-degree,Power-law exponent out-degree,Number of connected components,Assortativity coefficient
+bach BWM,5398,156,1086,6.9615,6.9615,3.1805,9.0000,0.2798,0.4645,1.8856,3.4051,1,0.0917
+beethoven sonatas,128832,712,17769,24.9565,24.9565,2.8052,13.0000,0.3788,0.8692,4.6916,4.6610,1,-0.0646
+mozart sonatas,55872,394,7118,18.0660,18.0660,3.0040,9.0000,0.3947,0.7786,6.7925,5.7412,1,-0.0207
+nocturnes_chopin,17291,595,6733,11.3160,11.3160,3.3295,13.0000,0.2554,0.6768,3.7996,4.3165,1,-0.0737
+sonatas_partitas_bach,39463,324,6785,20.9414,20.9414,2.6394,10.0000,0.4439,0.9443,6.6311,5.4288,1,-0.0415
+sonatas_violin_bach,40024,325,6847,21.0677,21.0677,2.6419,10.0000,0.4435,0.9444,6.9352,5.7323,1,-0.0418
