@@ -21,6 +21,14 @@ Grading criteria:
 
 **No need to write a report - email us the presentation as a pdf file** (need to confirm with professor)
 
+Compositors eras:
+* Georg Friedrich Händel - Baroque
+* Johann Sebastian Bach - Baroque
+* Wolfgang Amadeus Mozart - Classical
+* Ludwig van Beethoven - Romantic
+* Frédéric Chopin - Romantic
+* Guns N' Roses - 20th century
+
 ## Environment setup
 Install [anaconda](https://www.anaconda.com/products/individual) or [miniconda](https://docs.conda.io/en/latest/miniconda.html) clone this project, open repository main folder in a terminal and run:
 
